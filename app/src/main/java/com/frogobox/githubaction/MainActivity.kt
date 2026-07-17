@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // SICHERER VOLLBILD-MODUS: Funktioniert ohne zusätzliche Bibliotheken
+        // Vollbildmodus aktivieren
         try {
             requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
             window.setFlags(
@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+        // Nutzen der im Template eingebauten Layout-Datei
+        setContentView(R.id.custom_id_if_needed_otherwise_layout_main) 
+        
+        // Wir erstellen die WebView dynamisch, um ID-Konflikte im Template zu umgehen
         val myWebView = WebView(this)
         setContentView(myWebView)
 
