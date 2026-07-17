@@ -5,9 +5,14 @@ import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.webkit.HttpAuthHandler
+import android.webkit.WebSettings
 import android.app.AlertDialog
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.view.View
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,9 +21,16 @@ class MainActivity : AppCompatActivity() {
         val myWebView = WebView(this)
         setContentView(myWebView)
 
-        // BEHEBT DEN WEISSEN BILDSCHIRM: Erlaubt den Zugriff auf lokale HTML-Dateien
+        // RADIKALER FIX FÜR DIE OBERE LEISTE: Blendet Status- und Systemleisten vollständig aus
+        supportActionBar?.hide()
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        windowInsetsController.hide(WindowInsetsCompat.Type.statusBars()) 
+
+        // Zugriff auf lokale Dateien und modernen Web-Speicher erlauben
         myWebView.settings.allowFileAccess = true
         myWebView.settings.allowContentAccess = true
+        myWebView.settings.domStorageEnabled = true
 
         myWebView.settings.javaScriptEnabled = true
         // Erlaubt das Öffnen von Fenstern über JavaScript
@@ -26,8 +38,10 @@ class MainActivity : AppCompatActivity() {
 
         myWebView.webViewClient = object : WebViewClient() {
             override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
-                // Bei Fehlern (z.B. Offline) lokale Datei laden
-                myWebView.loadUrl("file:///android_asset/index.html")
+                // FIX FÜR OFFLINE-MODUS: Stoppt das Festfrieren der WebView bei Verbindungsabbruch
+                view?.stopLoading()
+                // Erzwingt das sofortige, saubere Laden der lokalen HTML-Datei
+                view?.loadUrl("file:///android_asset/index.html")
             }
 
             // DIESER BLOCK FÄNGT DAS HTACCESS-POPUP AB:
