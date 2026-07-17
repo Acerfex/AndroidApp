@@ -29,6 +29,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        // ERZWINGT DEN NAMEN ACERFEX BEIM KOMPILIEREN:
+        resValue("string", "app_name", "Acerfex")
     }
 
     signingConfigs {
