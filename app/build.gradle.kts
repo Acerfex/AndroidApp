@@ -28,16 +28,10 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        // ERZWINGT DEN NAMEN ACERFEX BEIM KOMPILIEREN:
-        resValue("string", "app_name", "Acerfex")
     }
 
     signingConfigs {
         create("release") {
-            // You need to specify either an absolute path or include the
-            // keystore file in the same directory as the build.gradle file.
-            // [PROJECT FOLDER NAME/app/[COPY YOUT KEY STORE] .jks in here
             storeFile = file(ProjectSetting.KEY_PATH)
             storePassword = ProjectSetting.KEY_STORE_PASSWORD
             keyAlias = ProjectSetting.KEY_ALIAS
@@ -48,20 +42,14 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-
-            // Disable Debug Mode
             isDebuggable = false
             isJniDebuggable = false
             isPseudoLocalesEnabled = false
-
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-            // Generated Signed APK / AAB
             signingConfig = signingConfigs.getByName("release")
-
         }
     }
 
@@ -75,7 +63,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-
 }
 
 kotlin {
@@ -86,13 +73,11 @@ kotlin {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.material)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
