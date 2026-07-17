@@ -16,6 +16,10 @@ class MainActivity : AppCompatActivity() {
         val myWebView = WebView(this)
         setContentView(myWebView)
 
+        // BEHEBT DEN WEISSEN BILDSCHIRM: Erlaubt den Zugriff auf lokale HTML-Dateien
+        myWebView.settings.allowFileAccess = true
+        myWebView.settings.allowContentAccess = true
+
         myWebView.settings.javaScriptEnabled = true
         // Erlaubt das Öffnen von Fenstern über JavaScript
         myWebView.settings.javaScriptCanOpenWindowsAutomatically = true 
