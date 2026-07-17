@@ -8,44 +8,35 @@ import android.webkit.HttpAuthHandler
 import android.app.AlertDialog
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.view.Window
-import android.view.WindowManager
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Schaltet das lila Banner systemweit ab, bevor das Layout geladen wird
+        setTheme(androidx.appcompat.R.style.Theme_AppCompat_Light_NoActionBar)
+        
         super.onCreate(savedInstanceState)
         
-        // 1. VOLLBILD ERZWINGEN (Entfernt die Statusleiste komplett vor dem Laden)
-        try {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-            supportActionBar?.hide()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        // Versteckt die obere Leiste in älteren Android-Projekten
+        supportActionBar?.hide()
 
-        // 2. WEBVIEW ERSTELLEN UND ALS HAUPTLAYOUT SETZEN
         val myWebView = WebView(this)
         setContentView(myWebView)
 
-        // 3. EINSTELLUNGEN FÜR OFFLINE & JAVASCRIPT
+        // Verhindert den weißen Bildschirm und erlaubt lokalen Zugriff
         myWebView.settings.allowFileAccess = true
         myWebView.settings.allowContentAccess = true
         myWebView.settings.domStorageEnabled = true
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.javaScriptCanOpenWindowsAutomatically = true 
 
-        // 4. FEHLERABFANG & HTACCESS-POPUP
         myWebView.webViewClient = object : WebViewClient() {
             override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
-                // Verhindert das Einfrieren und die weiße Seite
+                // Stoppt die hängende Verbindung und lädt sofort die Offline-Seite
                 view?.stopLoading()
                 view?.loadUrl("file:///android_asset/index.html")
             }
 
+            // POPUP FÜR HTACCESS / ANMELDUNG
             override fun onReceivedHttpAuthRequest(
                 view: WebView?,
                 handler: HttpAuthHandler?,
@@ -85,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // 5. IHRE WEBSEITE STARTEN
-        myWebView.loadUrl("https://lima-city.ch")
+        // Startet Ihre Webseite
+        myWebView.loadUrl("https://acerfex.lima-city.ch")
     }
 }
