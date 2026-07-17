@@ -16,11 +16,11 @@ object ProjectSetting {
     // ---------------------------------------------------------------------------------------------
 
     // Declaration app name
-    const val NAME_APP = "Github Action Automated"
+    const val NAME_APP = "Acerfex"
 
-    const val APP_DOMAIN = "com"
-    const val APP_PLAY_CONSOLE = "frogobox"
-    const val APP_NAME = "githubaction"
+    const val APP_DOMAIN = "ch"
+    const val APP_PLAY_CONSOLE = "lima_city"
+    const val APP_NAME = "acerfex"
 
     const val VERSION_MAJOR = 2
     const val VERSION_MINOR = 2
