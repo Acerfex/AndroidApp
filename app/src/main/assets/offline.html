@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Nicht gefunden</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Segoe UI,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#09090f;
+    overflow:hidden;
+    color:white;
+}
+
+.stars{
+    position:absolute;
+    inset:0;
+    background-image:
+    radial-gradient(white 1px, transparent 1px);
+    background-size:50px 50px;
+    opacity:.2;
+}
+
+.card{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    width:min(90%,800px);
+}
+
+.number{
+    font-size:10rem;
+    font-weight:900;
+    background:linear-gradient(90deg,#60a5fa,#8b5cf6,#ec4899);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.rocket{
+    font-size:5rem;
+    display:inline-block;
+    animation:fly 4s ease-in-out infinite;
+}
+
+@keyframes fly{
+    50%{
+        transform:translate(20px,-15px) rotate(8deg);
+    }
+}
+
+p{
+    margin:20px auto;
+    max-width:600px;
+    opacity:.8;
+    line-height:1.7;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:15px 30px;
+    border-radius:15px;
+    text-decoration:none;
+    color:white;
+    background:linear-gradient(135deg,#60a5fa,#8b5cf6);
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 35px rgba(139,92,246,.4);
+}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div class="card">
+    <div class="rocket">🚀</div>
+
+    <div class="number">Fehler</div>
+
+    <h1>Keine Internetverbindung</h1> <br>
+	<h3>Bitte stellen sie sicher, dass eine Internetverbindung besteht</h3>
+
+    <p>
+        [Internal Error]
+    </p>
+
+</div>
+
+</body>
+</html>
