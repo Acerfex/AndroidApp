@@ -8,16 +8,16 @@ import android.webkit.HttpAuthHandler
 import android.app.AlertDialog
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.view.View
+import android.view.Window
 import android.view.WindowManager
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Vollbildmodus aktivieren
+        // 1. VOLLBILD ERZWINGEN (Entfernt die Statusleiste komplett vor dem Laden)
         try {
-            requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -27,21 +27,21 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        // Nutzen der im Template eingebauten Layout-Datei
-        setContentView(R.id.custom_id_if_needed_otherwise_layout_main) 
-        
-        // Wir erstellen die WebView dynamisch, um ID-Konflikte im Template zu umgehen
+        // 2. WEBVIEW ERSTELLEN UND ALS HAUPTLAYOUT SETZEN
         val myWebView = WebView(this)
         setContentView(myWebView)
 
+        // 3. EINSTELLUNGEN FÜR OFFLINE & JAVASCRIPT
         myWebView.settings.allowFileAccess = true
         myWebView.settings.allowContentAccess = true
         myWebView.settings.domStorageEnabled = true
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.javaScriptCanOpenWindowsAutomatically = true 
 
+        // 4. FEHLERABFANG & HTACCESS-POPUP
         myWebView.webViewClient = object : WebViewClient() {
             override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
+                // Verhindert das Einfrieren und die weiße Seite
                 view?.stopLoading()
                 view?.loadUrl("file:///android_asset/index.html")
             }
@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // 5. IHRE WEBSEITE STARTEN
         myWebView.loadUrl("https://lima-city.ch")
     }
 }
